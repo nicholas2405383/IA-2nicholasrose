@@ -1,4 +1,6 @@
-/* colors an font esigns */
+/* nicholas rose 2405383 */
+
+/*design */
 :root {
   --n0: hsl(0, 0%, 100%);
   --n300: hsl(252, 6%, 83%);
@@ -13,7 +15,7 @@
   --page-width: min(100% - 2rem, 72rem);
 }
 
-/* backgroun an topography */
+/* Base, background and typography */
 *, *::before, *::after { box-sizing: border-box; }
 
 body {
@@ -25,7 +27,6 @@ body {
   font-family: var(--font);
   font-size: clamp(1.05rem, 1rem + 0.3vw, 1.25rem);
   line-height: 1.5;
-  /*blur thingy*/
   background:
     radial-gradient(38rem 30rem at 88% 78%, hsl(234 88% 74% / 0.38), transparent 70%),
     radial-gradient(36rem 30rem at 8% 12%, hsl(245 19% 35% / 0.7), transparent 70%),
@@ -52,8 +53,27 @@ h2 { font-size: clamp(1.4rem, 1.1rem + 1.5vw, 2rem); font-weight: 700; }
 a { color: inherit; }
 .lead { max-width: 40rem; color: var(--n300); overflow-wrap: anywhere; }
 
-/* layout */
-.site-header { width: var(--page-width); margin-inline: auto; padding-block: 1.25rem; }
+/* Fade-in */
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(1rem); }
+  to { opacity: 1; transform: none; }
+}
+
+/* headers */
+.site-header {
+  width: var(--page-width);
+  margin-inline: auto;
+  padding-block: 1.25rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+nav { display: flex; gap: 1.25rem; }
+nav a { text-decoration: none; font-weight: 700; }
+nav a:hover { text-decoration: underline; }
 
 .brand {
   display: inline-flex;
@@ -64,6 +84,7 @@ a { color: inherit; }
 }
 
 main {
+  animation: fade-up 0.6s ease both;
   width: var(--page-width);
   margin-inline: auto;
   flex: 1;
@@ -100,7 +121,7 @@ main {
 .cta { display: grid; justify-items: center; margin-top: 1.25rem; }
 .cta p { margin-bottom: 0.6rem; }
 
-/* section to add in buttons */
+/* Buttons */
 .button {
   display: inline-block;
   padding: 0.9rem 1.75rem;
@@ -121,7 +142,7 @@ main {
 .button--outline:hover { background: hsl(0 0% 100% / 0.1); border-color: var(--n0); }
 .button--small { padding: 0.35rem 1rem; }
 
-/* glass commacnd */
+/* Glass fade code */
 .glass {
   background: hsl(0 0% 100% / 0.08);
   border: 1px solid hsl(0 0% 100% / 0.3);
@@ -130,7 +151,7 @@ main {
   -webkit-backdrop-filter: blur(16px);
 }
 
-/* Sign-up */
+/*  Signup page */
 .form-section { max-width: 36rem; margin-inline: auto; width: 100%; text-align: center; }
 .form-section .lead { margin-inline: auto; }
 .signed-up { margin-bottom: 1.25rem; }
@@ -158,7 +179,7 @@ label { font-size: 1.25rem; font-weight: 500; }
 
 :is(input[type="text"], input[type="email"]):hover { border-color: var(--n300); background: hsl(0 0% 100% / 0.1); }
 input::placeholder { color: var(--n300); opacity: 0.8; }
-input[aria-invalid="true"] { border-color: var(--b500); }
+.field:has(.error:not(:empty)) :is(input[type="text"], input[type="email"]) { border-color: var(--b500); }
 
 .dropzone {
   position: relative;
@@ -174,17 +195,16 @@ input[aria-invalid="true"] { border-color: var(--b500); }
   transition: border-color 0.2s ease, background-color 0.2s ease;
 }
 
-.dropzone:is(:hover, .is-over) { border-color: var(--b500); background: hsl(0 0% 100% / 0.12); }
+.dropzone:hover { border-color: var(--b500); background: hsl(0 0% 100% / 0.12); }
 .dropzone input { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; }
-.dropzone:has([aria-invalid="true"]) { border-color: var(--b500); }
+.field:has(.error:not(:empty)) .dropzone { border-color: var(--b500); }
 .drop-title { font-weight: 800; overflow-wrap: anywhere; }
 .drop-hint { color: var(--n300); font-size: 1rem; }
 .error { margin: 0; color: var(--b500); font-size: 1rem; }
 .error:empty { display: none; }
 
-/* ticket sheet */
+/*  Ticket page */
 .ticket-section { display: grid; justify-items: center; text-align: center; }
-.ticket-id { font-weight: 700; color: var(--b500); }
 
 .ticket {
   display: flex;
@@ -211,18 +231,20 @@ input[aria-invalid="true"] { border-color: var(--b500); }
 .ticket-info { min-width: 0; display: grid; align-content: start; gap: 0.25rem; }
 .ticket-info p { margin: 0; overflow-wrap: anywhere; }
 .ticket-event { margin-bottom: 0.5rem; }
+.ticket-logo { float: left; width: 1.5rem; height: 1.5rem; margin-right: 0.5rem; }
 .ticket-name { font-size: 1.35rem; font-weight: 800; }
 .ticket-info a { color: var(--b500); font-weight: 700; }
 
-/* AI said i should add this to improve accessibility, might remove in the future */
+/* Accessibility stuff like focus and reduced motion */
 :is(a, button, input):focus-visible,
 .dropzone:focus-within { outline: 3px solid var(--b500); outline-offset: 3px; }
 
-@media (prefers-reduced-motion: reduce) { :where(*) { transition: none !important; } }
+@media (prefers-reduced-motion: reduce) { :where(*) { transition: none !important; animation: none !important; } }
 
-/* mobile accessibility */
+/*  Breakpoints */
 @media (max-width: 40rem) {
   .ticket { flex-direction: column; align-items: center; }
   .ticket-info { text-align: center; }
 }
+
 
