@@ -1,120 +1,86 @@
-/*nicholas rose #2405383*/
-/* validates the sign-up form, saves the data, opens the ticket page */
-
-const STORAGE_KEY = "ticketData";
-const COUNTER_KEY = "ticketCounter";
-const MAX_AVATAR_BYTES = 500 * 1024;
-const ALLOWED_AVATAR_TYPES = ["image/png", "image/jpeg"];
-const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
-const GITHUB_PATTERN = /^[a-z\d](?:[a-z\d]|-(?=[a-z\d])){0,38}$/i;
+//code: nicholas rose 2405383
 
 const form = document.getElementById("register-form");
-const dropzone = document.getElementById("dropzone");
 const avatarInput = document.getElementById("avatar");
 
-/* Writes a error message into a field and marks it as invalid */
+// Show a message under a field
 function showError(fieldId, message) {
-  document.getElementById(`${fieldId}-error`).textContent = message;
-  document.getElementById(fieldId).setAttribute("aria-invalid", "true");
+  document.getElementById(fieldId + "-error").textContent = message;
 }
 
-/* Empties every error paragraph and removes the invalid flags. */
+// Remove all error messages
 function clearErrors() {
-  form.querySelectorAll(".error").forEach((p) => { p.textContent = ""; });
-  form.querySelectorAll("[aria-invalid]").forEach((input) => input.removeAttribute("aria-invalid"));
+  const errors = document.querySelectorAll(".error");
+  for (let i = 0; i < errors.length; i++) {
+    errors[i].textContent = "";
+  }
 }
 
-/* Checks all fields. Returns true when valid else false. */
-function validateForm(values, file) {
+// Runs when the form is submitted
+form.addEventListener("submit", function (event) {
+  event.preventDefault();
+  clearErrors();
+
+  const fullName = document.getElementById("full-name").value.trim();
+  const email = document.getElementById("email").value.trim();
+  const github = document.getElementById("github").value.trim();
+  const file = avatarInput.files[0];
   let isValid = true;
 
-  if (!values.firstName) {
-    showError("first-name", "Enter your first name.");
+  // Name cannot be empty
+  if (fullName === "") {
+    showError("full-name", "Enter your full name.");
     isValid = false;
   }
 
-  if (!values.lastName) {
-    showError("last-name", "Enter your last name.");
-    isValid = false;
-  }
-
-  if (!EMAIL_PATTERN.test(values.email)) {
+  // Email must look like name@domain.com
+  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailPattern.test(email)) {
     showError("email", "Enter a valid email address, like name@example.com.");
     isValid = false;
   }
 
-  if (!GITHUB_PATTERN.test(values.github)) {
-    showError("github", "Enter a valid GitHub username, like @octocat.");
+  // GitHub must start with @
+  const githubPattern = /^@[A-Za-z0-9-]+$/;
+  if (!githubPattern.test(github)) {
+    showError("github", "Enter a GitHub username that starts with @, like @octocat.");
     isValid = false;
   }
 
+  // Picture must be a JPG or PNG under 500 KB
   if (!file) {
-    showError("avatar", "Choose or drop a profile picture.");
+    showError("avatar", "Choose a profile picture.");
     isValid = false;
-  } else if (!ALLOWED_AVATAR_TYPES.includes(file.type)) {
+  } else if (file.type !== "image/jpeg" && file.type !== "image/png") {
     showError("avatar", "The picture must be a JPG or PNG file.");
     isValid = false;
-  } else if (file.size > MAX_AVATAR_BYTES) {
+  } else if (file.size > 500 * 1024) {
     showError("avatar", "The picture is too large. Choose one under 500 KB.");
     isValid = false;
   }
 
-  return isValid;
-}
-
-/* Adds 1 to the counter */
-function nextSerialNumber() {
-  let count = 0;
-  try {
-    count = parseInt(localStorage.getItem(COUNTER_KEY), 10) || 0;
-    localStorage.setItem(COUNTER_KEY, String(count + 1));
-  } catch (error) {
-    count = Math.floor(Math.random() * 9000);
-  }
-  return "#" + String(count + 1).padStart(4, "0");
-}
-
-/* Saves the registration to localStorage and opens the ticket page. */
-function saveAndContinue(values, avatarDataUrl) {
-  try {
-    const ticketData = { ...values, avatar: avatarDataUrl, serial: nextSerialNumber() };
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(ticketData));
-    window.location.href = "ticket.html";
-  } catch (error) {
-    showError("avatar", "We couldn\u2019t save your ticket. Try a smaller picture.");
-  }
-}
-
-/* Shows the chosen file's name inside the drop zone. */
-function showFileName() {
-  const file = avatarInput.files[0];
-  document.getElementById("drop-title").textContent = file ? file.name : "Drop here";
-}
-
-/* Handles submit: validate first, then read the picture and save. */
-form.addEventListener("submit", (event) => {
-  event.preventDefault();
-  clearErrors();
-
-  const avatarFile = avatarInput.files[0];
-  const values = {
-    firstName: document.getElementById("first-name").value.trim(),
-    lastName: document.getElementById("last-name").value.trim(),
-    email: document.getElementById("email").value.trim(),
-    github: document.getElementById("github").value.trim().replace(/^@/, "")
-  };
-
-  if (!validateForm(values, avatarFile)) {
+  if (!isValid) {
     return;
   }
 
+  // Read the picture, save everything, then open the ticket page
   const reader = new FileReader();
-  reader.addEventListener("load", () => saveAndContinue(values, reader.result));
-  reader.addEventListener("error", () => showError("avatar", "We couldn\u2019t read that picture. Try another file."));
-  reader.readAsDataURL(avatarFile);
+  reader.onload = function () {
+    const ticketData = {
+      fullName: fullName,
+      email: email,
+      github: github,
+      avatar: reader.result,
+      serial: "#" + Math.floor(10000 + Math.random() * 90000)
+    };
+    localStorage.setItem("ticketData", JSON.stringify(ticketData));
+    window.location.href = "ticket.html";
+  };
+  reader.readAsDataURL(file);
 });
 
-avatarInput.addEventListener("change", showFileName);
-["dragenter", "dragover"].forEach((name) => dropzone.addEventListener(name, () => dropzone.classList.add("is-over")));
-["dragleave", "drop"].forEach((name) => dropzone.addEventListener(name, () => dropzone.classList.remove("is-over")));
-
+// Show the chosen file name in the drop zone
+avatarInput.addEventListener("change", function () {
+  const file = avatarInput.files[0];
+  document.getElementById("drop-title").textContent = file ? file.name : "Drop here";
+});
