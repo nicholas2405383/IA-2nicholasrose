@@ -1,3 +1,4 @@
+/*nicholas rose #2405383*/
 /* validates the sign-up form, saves the data, opens the ticket page */
 
 const STORAGE_KEY = "ticketData";
