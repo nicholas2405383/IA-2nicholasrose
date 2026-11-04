@@ -16,7 +16,7 @@ if (saved === null) {
   document.getElementById("ticket-name").textContent = data.fullName;
   document.getElementById("ticket-email").textContent = data.email;
 
-  // GitHub link r)
+  // GitHub link 
   const github = document.getElementById("ticket-github");
   github.textContent = data.github;
   github.href = "https://github.com/" + data.github.slice(1);
