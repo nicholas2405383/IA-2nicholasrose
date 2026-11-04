@@ -1,4 +1,5 @@
-//code: nicholas rose 2405383
+
+ // code: nicholas rose 2405383
 
 const form = document.getElementById("register-form");
 const avatarInput = document.getElementById("avatar");
@@ -11,6 +12,7 @@ function showError(fieldId, message) {
 // Remove all error messages
 function clearErrors() {
   const errors = document.querySelectorAll(".error");
+
   for (let i = 0; i < errors.length; i++) {
     errors[i].textContent = "";
   }
@@ -21,20 +23,22 @@ form.addEventListener("submit", function (event) {
   event.preventDefault();
   clearErrors();
 
-  const fullName = document.getElementById("full-name").value.trim();
+  const fullName = document.getElementById("name").value.trim();
   const email = document.getElementById("email").value.trim();
   const github = document.getElementById("github").value.trim();
   const file = avatarInput.files[0];
+
   let isValid = true;
 
   // Name cannot be empty
   if (fullName === "") {
-    showError("full-name", "Enter your full name.");
+    showError("name", "Enter your full name.");
     isValid = false;
   }
 
   // Email must look like name@domain.com
   const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
   if (!emailPattern.test(email)) {
     showError("email", "Enter a valid email address, like name@example.com.");
     isValid = false;
@@ -42,6 +46,7 @@ form.addEventListener("submit", function (event) {
 
   // GitHub must start with @
   const githubPattern = /^@[A-Za-z0-9-]+$/;
+
   if (!githubPattern.test(github)) {
     showError("github", "Enter a GitHub username that starts with @, like @octocat.");
     isValid = false;
@@ -65,6 +70,7 @@ form.addEventListener("submit", function (event) {
 
   // Read the picture, save everything, then open the ticket page
   const reader = new FileReader();
+
   reader.onload = function () {
     const ticketData = {
       fullName: fullName,
@@ -73,14 +79,28 @@ form.addEventListener("submit", function (event) {
       avatar: reader.result,
       serial: "#" + Math.floor(10000 + Math.random() * 90000)
     };
-    localStorage.setItem("ticketData", JSON.stringify(ticketData));
-    window.location.href = "ticket.html";
+
+    try {
+      localStorage.setItem("ticketData", JSON.stringify(ticketData));
+      window.location.href = "ticket.html";
+    } catch (error) {
+      showError("avatar", "Could not save ticket data. Please try again.");
+    }
   };
+
+  reader.onerror = function () {
+    showError("avatar", "Could not read the picture. Try another file.");
+  };
+
   reader.readAsDataURL(file);
 });
 
 // Show the chosen file name in the drop zone
 avatarInput.addEventListener("change", function () {
   const file = avatarInput.files[0];
-  document.getElementById("drop-title").textContent = file ? file.name : "Drop here";
+  const dropTitle = document.getElementById("drop-title");
+
+  if (dropTitle) {
+    dropTitle.textContent = file ? file.name : "Drop here";
+  }
 });
