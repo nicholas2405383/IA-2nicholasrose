@@ -1,56 +1,46 @@
-
-<!-- Nicholas Rose 2405383 -->
-
 <!DOCTYPE html>
 <html lang="en">
-<!-- Main stylesheet and tabs -->
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Coding Conference 2026</title>
-  <!-- Inconsolata font from Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Inconsolata" rel="stylesheet">
-  <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+  <title>Code Conference 2026</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@400;500;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
 </head>
-
 <body>
   <header class="site-header">
     <a class="brand" href="index.html">
-      <img src="assets/logo.svg" alt="" width="36" height="36">
-      <span>Coding Conference 2026</span>
+      <img src="assets/logo.svg" alt="" width="32" height="32">
+      <span>code conference</span>
     </a>
+    <nav aria-label="Main">
+      <ul>
+        <li><a href="index.html" aria-current="page">Home</a></li>
+        <li><a href="login.html">Register</a></li>
+      </ul>
+    </nav>
   </header>
 
   <main>
     <section class="hero">
-
-      <h1>Welcome to the 2026 Coding Conference</h1>
-      <p class="lead">A full day of coding, talks and workshops.</p>
-      <dl class="details">
-        <dt>Date:</dt>
-        <dd><time datetime="2026-10-26">October 26, 2026</time></dd>
-        <dt>Location:</dt>
-        <dd>Papine, Kingston</dd>
-      </dl>
-<!-- Link to the registration form -->
-      <div class="cta">
-        <p>Sign up to secure your spot</p>
-        <a class="button" href="login.html">Sign up</a>
-      </div>
-<!-- Link to sign up -->
-      <div class="cta">
-        <p>Already signed up?</p>
-        <a class="button button--outline" href="ticket.html">Login</a>
-      </div>
-
+      <h1>Code Conference 2026</h1>
+      <p class="event-meta">
+        <time datetime="2026-10-26">October 26, 2026</time>
+        <span>Papine, Kgn</span>
+      </p>
+      <p class="lead">
+        A full day of talks and hands-on workshops for students and early-career developers.
+        Register to get your personal ticket.
+      </p>
+      <a class="button" href="login.html">Register Now</a>
     </section>
-
   </main>
-<!--footer and copyright-->
-  <footer class="site-footer">
-    <p>&copy; Nicholas Rose</p>
-  </footer>
 
+  <footer class="site-footer">
+    <p>Code Conference 2026</p>
+  </footer>
 </body>
 </html>
+
