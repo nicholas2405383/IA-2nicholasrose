@@ -1,71 +1,55 @@
 <!-- Nicholas Rose 2405383 -->
-
+ 
 <!DOCTYPE html>
 <html lang="en">
-
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Coding Conference 2026</title>
+  <title>Your ticket | Coding Conference 2026</title>
   <link href="https://fonts.googleapis.com/css2?family=Inconsolata" rel="stylesheet">
   <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
   <link rel="stylesheet" href="css/style.css">
 </head>
-
-
 <body>
-
   <header class="site-header">
     <a class="brand" href="index.html">
       <img src="assets/logo.svg" alt="" width="36" height="36">
       <span>Coding Conference 2026</span>
     </a>
+    <nav aria-label="Main navigation">
+      <a href="index.html">Home</a>
+      <a href="login.html">Register</a>
+    </nav>
   </header>
 
   <main>
-
     <section class="ticket-section">
-
       <!-- Name is filled in by ticket.js -->
-      <h1>Hello! <span id="ticket-heading-name"></span>, your ticket is ready!</h1>
-
-      <p class="ticket-id">ID: <span id="ticket-id"></span></p>
-
+      <h1>Congrats, <span id="ticket-heading-name"></span>! Your ticket is ready.</h1>
       <!-- Glass ticket -->
       <article class="ticket glass" aria-label="Your conference ticket">
         <div class="ticket-photo">
-
           <img id="ticket-avatar" class="avatar" alt="" width="128" height="128">
           <p>Ticket no. <span id="ticket-serial"></span></p>
-
         </div>
-
         <div class="ticket-info">
-
-          <h2 class="ticket-event">Coding Conference 2026</h2>
+          <h2 class="ticket-event">
+            <img class="ticket-logo" src="assets/logo.svg" alt="Coding Conf logo" width="24" height="24">Coding Conference 2026
+          </h2>
+          <p>October 26, 2026</p>
+          <p>Papine, Kgn</p>
           <p class="ticket-name" id="ticket-name"></p>
           <p id="ticket-email"></p>
           <p><a id="ticket-github" href="#" target="_blank" rel="noopener"></a></p>
-
         </div>
-
       </article>
-
     </section>
-
   </main>
 
   <footer class="site-footer">
-
     <p>&copy; Nicholas Rose</p>
-
   </footer>
-
   <!-- Fills the ticket from the saved data -->
-  <script src="js/ticket.js">
-  </script>
-
-
+  <script src="js/ticket.js"></script>
 </body>
 </html>
