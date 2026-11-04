@@ -26,4 +26,3 @@ if (saved === null) {
   avatar.src = data.avatar;
   avatar.alt = "Profile picture of " + data.fullName;
 }
-
