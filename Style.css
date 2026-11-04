@@ -1,0 +1,228 @@
+/* colors an font esigns */
+:root {
+  --n0: hsl(0, 0%, 100%);
+  --n300: hsl(252, 6%, 83%);
+  --n500: hsl(245, 15%, 58%);
+  --n700: hsl(245, 19%, 35%);
+  --n900: hsl(248, 70%, 10%);
+  --b500: hsl(234, 88%, 74%);
+  --b700: hsl(234, 71%, 66%);
+  --gradient-text: linear-gradient(90deg, hsl(234, 88%, 74%), hsl(0, 0%, 100%));
+  --font: "Inconsolata", ui-monospace, "SF Mono", Consolas, monospace;
+  --radius: 1.25rem;
+  --page-width: min(100% - 2rem, 72rem);
+}
+
+/* backgroun an topography */
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  color: var(--n0);
+  font-family: var(--font);
+  font-size: clamp(1.05rem, 1rem + 0.3vw, 1.25rem);
+  line-height: 1.5;
+  /*blur thingy*/
+  background:
+    radial-gradient(38rem 30rem at 88% 78%, hsl(234 88% 74% / 0.38), transparent 70%),
+    radial-gradient(36rem 30rem at 8% 12%, hsl(245 19% 35% / 0.7), transparent 70%),
+    var(--n900);
+  background-attachment: fixed;
+}
+
+:is(h1, h2) { line-height: 1.1; margin: 0 0 1rem; overflow-wrap: anywhere; }
+
+h1 {
+  font-size: clamp(2rem, 1rem + 5vw, 4.5rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  background: var(--gradient-text);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  padding-bottom: 0.1em;
+}
+
+h2 { font-size: clamp(1.4rem, 1.1rem + 1.5vw, 2rem); font-weight: 700; }
+:where(p) { margin: 0 0 1rem; }
+a { color: inherit; }
+.lead { max-width: 40rem; color: var(--n300); overflow-wrap: anywhere; }
+
+/* layout */
+.site-header { width: var(--page-width); margin-inline: auto; padding-block: 1.25rem; }
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+main {
+  width: var(--page-width);
+  margin-inline: auto;
+  flex: 1;
+  display: grid;
+  align-content: center;
+  padding-block: 2rem;
+}
+
+.site-footer {
+  width: var(--page-width);
+  margin-inline: auto;
+  padding-block: 1.25rem;
+  text-align: center;
+  color: var(--n300);
+}
+
+.site-footer p { margin: 0; }
+
+/* Landing page */
+.hero { display: grid; justify-items: center; text-align: center; }
+
+.details {
+  display: grid;
+  grid-template-columns: auto auto;
+  gap: 0.25rem 1rem;
+  justify-content: center;
+  margin: 0 0 1.5rem;
+  font-size: clamp(1.15rem, 1rem + 1vw, 1.6rem);
+}
+
+.details dt { color: var(--n300); text-align: right; }
+.details dd { margin: 0; color: var(--b500); font-weight: 700; text-align: left; }
+
+.cta { display: grid; justify-items: center; margin-top: 1.25rem; }
+.cta p { margin-bottom: 0.6rem; }
+
+/* section to add in buttons */
+.button {
+  display: inline-block;
+  padding: 0.9rem 1.75rem;
+  border: 2px solid var(--b500);
+  border-radius: 0.75rem;
+  background: var(--b500);
+  color: var(--n900);
+  font: inherit;
+  font-weight: 800;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.button:hover { background: var(--b700); border-color: var(--b700); transform: translateY(-2px); }
+
+.button--outline { background: transparent; border-color: var(--n300); color: var(--n0); }
+.button--outline:hover { background: hsl(0 0% 100% / 0.1); border-color: var(--n0); }
+.button--small { padding: 0.35rem 1rem; }
+
+/* glass commacnd */
+.glass {
+  background: hsl(0 0% 100% / 0.08);
+  border: 1px solid hsl(0 0% 100% / 0.3);
+  border-radius: var(--radius);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+/* Sign-up */
+.form-section { max-width: 36rem; margin-inline: auto; width: 100%; text-align: center; }
+.form-section .lead { margin-inline: auto; }
+.signed-up { margin-bottom: 1.25rem; }
+
+#register-form {
+  padding: clamp(1.25rem, 4vw, 2rem);
+  display: grid;
+  gap: 1.25rem;
+  text-align: left;
+}
+
+.field { display: grid; gap: 0.4rem; }
+label { font-size: 1.25rem; font-weight: 500; }
+
+:is(input[type="text"], input[type="email"]) {
+  width: 100%;
+  padding: 0.75rem 0.9rem;
+  border: 1px solid var(--n500);
+  border-radius: 0.75rem;
+  background: hsl(0 0% 100% / 0.06);
+  color: var(--n0);
+  font: inherit;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+:is(input[type="text"], input[type="email"]):hover { border-color: var(--n300); background: hsl(0 0% 100% / 0.1); }
+input::placeholder { color: var(--n300); opacity: 0.8; }
+input[aria-invalid="true"] { border-color: var(--b500); }
+
+.dropzone {
+  position: relative;
+  display: grid;
+  place-content: center;
+  gap: 0.25rem;
+  min-height: 9rem;
+  padding: 1rem;
+  border: 2px dashed var(--n500);
+  border-radius: 0.75rem;
+  background: hsl(0 0% 100% / 0.06);
+  text-align: center;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.dropzone:is(:hover, .is-over) { border-color: var(--b500); background: hsl(0 0% 100% / 0.12); }
+.dropzone input { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; }
+.dropzone:has([aria-invalid="true"]) { border-color: var(--b500); }
+.drop-title { font-weight: 800; overflow-wrap: anywhere; }
+.drop-hint { color: var(--n300); font-size: 1rem; }
+.error { margin: 0; color: var(--b500); font-size: 1rem; }
+.error:empty { display: none; }
+
+/* ticket sheet */
+.ticket-section { display: grid; justify-items: center; text-align: center; }
+.ticket-id { font-weight: 700; color: var(--b500); }
+
+.ticket {
+  display: flex;
+  gap: 1.5rem;
+  width: 100%;
+  max-width: 42rem;
+  padding: clamp(1.25rem, 4vw, 2rem);
+  text-align: left;
+}
+
+.ticket-photo { display: grid; align-content: start; justify-items: center; gap: 0.75rem; }
+.ticket-photo p { margin: 0; color: var(--n300); font-size: 1rem; text-align: center; }
+.ticket-photo span { color: var(--n0); font-weight: 800; }
+
+.avatar {
+  width: 8rem;
+  height: 8rem;
+  border-radius: 0.75rem;
+  border: 2px solid var(--b500);
+  object-fit: cover;
+  background: hsl(0 0% 100% / 0.15);
+}
+
+.ticket-info { min-width: 0; display: grid; align-content: start; gap: 0.25rem; }
+.ticket-info p { margin: 0; overflow-wrap: anywhere; }
+.ticket-event { margin-bottom: 0.5rem; }
+.ticket-name { font-size: 1.35rem; font-weight: 800; }
+.ticket-info a { color: var(--b500); font-weight: 700; }
+
+/* AI said i should add this to improve accessibility, might remove in the future */
+:is(a, button, input):focus-visible,
+.dropzone:focus-within { outline: 3px solid var(--b500); outline-offset: 3px; }
+
+@media (prefers-reduced-motion: reduce) { :where(*) { transition: none !important; } }
+
+/* mobile accessibility */
+@media (max-width: 40rem) {
+  .ticket { flex-direction: column; align-items: center; }
+  .ticket-info { text-align: center; }
+}
+
