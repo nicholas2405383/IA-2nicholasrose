@@ -1,11 +1,11 @@
 //nicholas rose #2405383
 
-// ticket.js: fills the ticket with the saved data
+// fills the ticket with the saved data
 
 const saved = localStorage.getItem("ticketData");
 
 if (saved === null) {
-  // No saved data, so go back to the landing page
+  // go back to the landing page
   window.location.replace("index.html");
 } else {
   const data = JSON.parse(saved);
@@ -16,7 +16,7 @@ if (saved === null) {
   document.getElementById("ticket-name").textContent = data.fullName;
   document.getElementById("ticket-email").textContent = data.email;
 
-  // GitHub link 
+  // GitHub link removes the @)
   const github = document.getElementById("ticket-github");
   github.textContent = data.github;
   github.href = "https://github.com/" + data.github.slice(1);
